@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: brightchamps-ai-concierge
+    env: static
+    staticPublishPath: ./build
+
