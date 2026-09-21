@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrightCHAMPS | AI Attendance Concierge Prototype</title>
+  <style>
+    :root {
+      --primary: #5c3be8;
+      --primary-dark: #4324c4;
+      --primary-light: #f0edff;
+      --success: #10b981;
+      --success-dark: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --gray-900: #1e293b;
+      --gray-700: #334155;
+      --gray-500: #64748b;
+      --gray-200: #e2e8f0;
+      --gray-100: #f8fafc;
+      --white: #ffffff;
+      --whatsapp-green: #25d366;
+      --whatsapp-bg: #efeae2;
+      --whatsapp-header: #075e54;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f1f5f9;
+      color: var(--gray-900);
+      line-height: 1.5;
+    }
+
+    /* Top Nav */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-logo {
+      background: linear-gradient(135deg, var(--primary), #a855f7);
+      color: var(--white);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--gray-500);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .nav-badges {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .badge-primary { background: var(--primary-light); color: var(--primary); }
+    .badge-success { background: #d1fae5; color: var(--success-dark); }
+
+    /* Navigation Tabs */
+    .tab-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      padding: 0 2rem;
+      gap: 2rem;
+    }
+    .tab-btn {
+      padding: 1rem 0;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--primary); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1300px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Stat Box */
+    .stat-box {
+      background: var(--white);
+      border-radius: 10px;
+      border: 1px solid var(--gray-200);
+      padding: 1.25rem;
+      border-left: 4px solid var(--primary);
+    }
+    .stat-box.success { border-left-color: var(--success); }
+    .stat-box.warning { border-left-color: var(--warning); }
+    .stat-box.danger { border-left-color: var(--danger); }
+    .stat-label { font-size: 0.8rem; color: var(--gray-500); text-transform: uppercase; font-weight: 600; }
+    .stat-value { font-size: 1.5rem; font-weight: 800; color: var(--dark); margin: 0.25rem 0; }
+    .stat-sub { font-size: 0.8rem; color: var(--gray-500); }
+
+    /* WhatsApp Simulator */
+    .whatsapp-wrapper {
+      background: var(--whatsapp-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border: 1px solid var(--gray-200);
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+    .wa-header {
+      background: var(--whatsapp-header);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .wa-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #128c7e;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+    }
+    .wa-info h4 { font-size: 0.95rem; font-weight: 600; }
+    .wa-info p { font-size: 0.75rem; opacity: 0.85; }
+
+    .wa-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background-image: radial-gradient(#d1d7db 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    .wa-bubble {
+      max-width: 80%;
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      position: relative;
+      line-height: 1.4;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .wa-bubble.bot {
+      background: var(--white);
+      align-self: flex-start;
+      border-top-left-radius: 0;
+    }
+    .wa-bubble.user {
+      background: #d9fdd3;
+      align-self: flex-end;
+      border-top-right-radius: 0;
+    }
+    .wa-time {
+      font-size: 0.65rem;
+      color: var(--gray-500);
+      text-align: right;
+      margin-top: 0.25rem;
+    }
+
+    .wa-action-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .chip {
+      background: var(--white);
+      border: 1px solid #128c7e;
+      color: #128c7e;
+      padding: 0.4rem 0.8rem;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chip:hover {
+      background: #128c7e;
+      color: var(--white);
+    }
+
+    .wa-input-box {
+      background: #f0f2f5;
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .wa-input-box input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--gray-200);
+      outline: none;
+      font-size: 0.9rem;
+    }
+    .wa-send-btn {
+      background: #128c7e;
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    /* Lead Meta Panel */
+    .lead-panel {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      padding: 1.25rem;
+    }
+    .lead-select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: 1px solid var(--gray-200);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .crm-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.85rem;
+    }
+    .crm-label { color: var(--gray-500); font-weight: 500; }
+    .crm-val { font-weight: 600; color: var(--dark); }
+
+    /* Sliders */
+    .slider-group {
+      margin-bottom: 1.25rem;
+    }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--gray-200);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    th {
+      background: var(--gray-100);
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    /* Runbook steps */
+    .step-list {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+    .step-item {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .step-item::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .step-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .step-desc { font-size: 0.85rem; color: var(--gray-700); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">BC</div>
+      <div>
+        <div class="brand-title">BrightCHAMPS | Founder's Office</div>
+        <div class="brand-subtitle">AI Forward Deployed Associate — Prototype Build</div>
+      </div>
+    </div>
+    <div class="nav-badges">
+      <span class="badge badge-primary">Component: Zero No-Show Concierge</span>
+      <span class="badge badge-success">Status: Production Ready</span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('simulator')">💬 WhatsApp Concierge Simulator</button>
+    <button class="tab-btn" onclick="switchTab('calculator')">📊 Real-Time Financial & ROI Engine</button>
+    <button class="tab-btn" onclick="switchTab('funnel')">🔍 Funnel Diagnostic & Data Leaks</button>
+    <button class="tab-btn" onclick="switchTab('runbook')">📘 Operational Runbook & SOP</button>
+  </nav>
+
+  <main>
+
+    <!-- TAB 1: WhatsApp Simulator -->
+    <section id="tab-simulator" class="tab-content active">
+      <div class="grid-4">
+        <div class="stat-box">
+          <div class="stat-label">Scheduled Leads</div>
+          <div class="stat-value">1,615 / mo</div>
+          <div class="stat-sub">64.6% booking rate</div>
+        </div>
+        <div class="stat-box danger">
+          <div class="stat-label">Baseline No-Shows</div>
+          <div class="stat-value">585 / mo</div>
+          <div class="stat-sub">36.2% pre-demo drop-off</div>
+        </div>
+        <div class="stat-box success">
+          <div class="stat-label">Recovered Attendees</div>
+          <div class="stat-value">+229 / mo</div>
+          <div class="stat-sub">With AI WhatsApp Concierge</div>
+        </div>
+        <div class="stat-box success">
+          <div class="stat-label">Net Incremental Revenue</div>
+          <div class="stat-value">₹24.1 Lakhs</div>
+          <div class="stat-sub">₹2.89 Cr / year run-rate</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Phone Simulator -->
+        <div class="whatsapp-wrapper">
+          <div class="wa-header">
+            <div class="wa-avatar">🎓</div>
+            <div class="wa-info">
+              <h4>Aarav (BrightCHAMPS Concierge)</h4>
+              <p>Official WhatsApp Business Verified • Online</p>
+            </div>
+          </div>
+          <div class="wa-messages" id="chat-messages">
+            <!-- Messages populated via JS -->
+          </div>
+          <div class="wa-action-chips" id="quick-chips">
+            <button class="chip" onclick="sendUserMessage('Yes, we will definitely be there! Thanks')">✅ Confirm Attendance</button>
+            <button class="chip" onclick="sendUserMessage('Can we reschedule to tomorrow? He has soccer practice')">📅 1-Tap Reschedule</button>
+            <button class="chip" onclick="sendUserMessage('Do we need to install Zoom or can he use an iPad?')">💻 Device Requirements?</button>
+            <button class="chip" onclick="sendUserMessage('How much are the course fees after trial?')">💰 Course Pricing?</button>
+          </div>
+          <div class="wa-input-box">
+            <input type="text" id="user-input" placeholder="Type message as parent..." onkeydown="if(event.key==='Enter') sendCustomMessage()">
+            <button class="wa-send-btn" onclick="sendCustomMessage()">➤</button>
+          </div>
+        </div>
+
+        <!-- CRM & Telemetry State Inspector -->
+        <div>
+          <div class="card">
+            <div class="card-title">
+              <span>CRM Lead Inspector (Live Sync)</span>
+              <span class="badge badge-primary" id="crm-status-badge">DEMO_SCHEDULED</span>
+            </div>
+            <label style="font-size: 0.8rem; font-weight: 600; color: var(--gray-500);">SELECT TEST LEAD:</label>
+            <select class="lead-select" id="lead-selector" onchange="changeLead()">
+              <option value="0">L104544 — Sarah Jenkins (USA, America/New_York) | Child: Ethan (10)</option>
+              <option value="1">L100757 — Tariq Al-Mansoor (Saudi Arabia, Asia/Riyadh) | Child: Omar (8)</option>
+              <option value="2">L103708 — David Smith (UK, Europe/London) | Child: Sophie (11)</option>
+              <option value="3">L101868 — Nguyen Van Minh (Vietnam, Asia/Ho_Chi_Minh) | Child: Bao (9)</option>
+            </select>
+
+            <div class="crm-row">
+              <span class="crm-label">Lead ID</span>
+              <span class="crm-val" id="disp-lead-id">L104544</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Parent Name</span>
+              <span class="crm-val" id="disp-parent-name">Sarah Jenkins</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Child Name & Age</span>
+              <span class="crm-val" id="disp-child-info">Ethan (10 yrs)</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Timezone</span>
+              <span class="crm-val" id="disp-tz">America/New_York (US_SHIFT)</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Scheduled Demo Timing</span>
+              <span class="crm-val" id="disp-demo-time">Tomorrow at 5:00 PM</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Assigned Counselor</span>
+              <span class="crm-val" id="disp-rep">AD-01 (US Shift)</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Calendar Sync (.ics)</span>
+              <span class="crm-val" style="color: var(--success); font-weight: 700;">Google Cal + Apple .ics Injected</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Rep Action Required?</span>
+              <span class="crm-val" id="disp-rep-action" style="color: var(--gray-500);">None (Waiting for bot)</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Zero-Engineering Webhook Payload</div>
+            <pre style="background: #0f172a; color: #38bdf8; padding: 1rem; border-radius: 8px; font-size: 0.75rem; overflow-x: auto;" id="webhook-payload">
+{
+  "event": "crm.demo_scheduled",
+  "lead_id": "L104544",
+  "parent_whatsapp": "+14155552671",
+  "child_name": "Ethan",
+  "scheduled_at": "2026-07-30T17:00:00Z",
+  "status": "DEMO_SCHEDULED",
+  "router_rule": "US_TIMEZONE_MATCH"
+}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Financial Calculator -->
+    <section id="tab-calculator" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Interactive ROI & Lever Simulation Model</div>
+          <p style="font-size: 0.85rem; color: var(--gray-500); margin-bottom: 1.5rem;">
+            Adjust the sliders below to see how improving the Demo Show Rate and implementing Timezone-Shift Routing impacts BrightCHAMPS monthly revenue and annual run-rate.
+          </p>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Target Demo Show Rate (Baseline: 63.8%)</span>
+              <span id="slider-showrate-val" style="color: var(--primary); font-weight: 700;">78.0%</span>
+            </div>
+            <input type="range" min="63.8" max="85" step="0.5" value="78" class="slider" id="slider-showrate" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Day-1 Timezone Routing Rule</span>
+              <span id="slider-routing-val" style="color: var(--success); font-weight: 700;">ACTIVE (+41.7 conv/mo)</span>
+            </div>
+            <select class="lead-select" id="routing-toggle" onchange="calculateROI()">
+              <option value="1">Enabled (Optimal Shift Alignment)</option>
+              <option value="0">Disabled (Naive Round-Robin Baseline)</option>
+            </select>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Revenue per Converted Customer</span>
+              <span id="slider-rev-val" style="font-weight: 700;">₹60,000</span>
+            </div>
+            <input type="range" min="45000" max="75000" step="1000" value="60000" class="slider" id="slider-rev" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>Demo-to-Paid Historical Conversion Rate</span>
+              <span style="font-weight: 700;">17.57%</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--gray-500);">Empirically locked from 2-month dataset (362 conversions / 2,060 attendees).</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="border-top: 4px solid var(--success);">
+            <div class="card-title">Sized Financial Impact (Finance Sign-Off)</div>
+            <div style="margin: 1.5rem 0;">
+              <div style="font-size: 0.85rem; color: var(--gray-500); text-transform: uppercase; font-weight: 600;">Net Monthly Revenue Addition</div>
+              <div style="font-size: 2.5rem; font-weight: 800; color: var(--success);" id="calc-monthly-rev">₹24,12,000 / mo</div>
+              <div style="font-size: 0.9rem; color: var(--gray-500);" id="calc-annual-rev">Annualized Run-Rate: ₹2.89 Crores / year</div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--gray-200); margin: 1.25rem 0;">
+
+            <div class="crm-row">
+              <span class="crm-label">Scheduled Demos / Month</span>
+              <span class="crm-val">1,614.5 leads</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">No-Shows Eliminated / Month</span>
+              <span class="crm-val" id="calc-recovered-leads" style="color: var(--success); font-weight: 700;">229.3 parents</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Incremental Conversions / Month</span>
+              <span class="crm-val" id="calc-incremental-conv" style="color: var(--success); font-weight: 700;">+40.2 customers</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Wasted Rep Hours Saved / Month</span>
+              <span class="crm-val" id="calc-hours-saved">172.0 hours (Zoom downtime)</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Estimated Solution Cost (WABA API + Bot)</span>
+              <span class="crm-val">₹35,000 / mo</span>
+            </div>
+            <div class="crm-row">
+              <span class="crm-label">Net Return on Investment (ROI)</span>
+              <span class="crm-val" id="calc-roi" style="color: var(--primary); font-weight: 800;">68.9x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Funnel Diagnostic -->
+    <section id="tab-funnel" class="tab-content">
+      <div class="card">
+        <div class="card-title">Full Funnel Conversion Accounting (5,000 Leads Baseline)</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Funnel Stage</th>
+              <th>2-Mo Total</th>
+              <th>Monthly Vol</th>
+              <th>Stage Conversion</th>
+              <th>Funnel Conversion</th>
+              <th>Lost Opportunity Sizing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Leads Generated</strong></td>
+              <td>5,000</td>
+              <td>2,500.0</td>
+              <td>100.0%</td>
+              <td>100.0%</td>
+              <td>Marketing Spend: ₹22.5L / mo</td>
+            </tr>
+            <tr>
+              <td><strong>2. Demo Scheduled</strong></td>
+              <td>3,229</td>
+              <td>1,614.5</td>
+              <td>64.58%</td>
+              <td>64.58%</td>
+              <td>885.5 unscheduled leads/mo (Flushes ₹7.97L CAC)</td>
+            </tr>
+            <tr style="background: #fef2f2;">
+              <td><strong>3. Demo Joined (Attended)</strong></td>
+              <td>2,060</td>
+              <td>1,030.0</td>
+              <td><strong>63.80%</strong></td>
+              <td>41.20%</td>
+              <td><strong style="color: var(--danger);">584.5 NO-SHOWS / MO (₹61.62 Lakhs/mo Leak)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>4. Demo Completed</strong></td>
+              <td>1,786</td>
+              <td>893.0</td>
+              <td>86.70%</td>
+              <td>35.72%</td>
+              <td>137.0 in-demo drop-offs / mo</td>
+            </tr>
+            <tr style="background: #f0fdf4;">
+              <td><strong>5. Converted (Paid)</strong></td>
+              <td>362</td>
+              <td>181.0</td>
+              <td>20.27%</td>
+              <td><strong>7.24%</strong></td>
+              <td>Current Monthly Revenue: ₹1.086 Crores / mo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">The Scheduling Lag Cliff (Root Cause)</div>
+          <p style="font-size: 0.85rem; color: var(--gray-700); margin-bottom: 1rem;">
+            When parents wait >24h between filling the lead form and scheduling the demo, their attendance collapses dramatically:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Lag Bucket</th>
+                <th>Leads</th>
+                <th>Demo Join Rate</th>
+                <th>Full Funnel Conv</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>&le; 24h (Fast Contact)</strong></td>
+                <td>1,477</td>
+                <td style="color: var(--success); font-weight: 700;">74.07%</td>
+                <td>12.32%</td>
+              </tr>
+              <tr>
+                <td><strong>&gt; 24h (Delayed Contact)</strong></td>
+                <td>1,752</td>
+                <td style="color: var(--danger); font-weight: 700;">55.14%</td>
+                <td>10.27%</td>
+              </tr>
+              <tr style="font-weight: 700; background: var(--gray-100);">
+                <td>Performance Drop</td>
+                <td>—</td>
+                <td style="color: var(--danger);">-18.93% drop</td>
+                <td>-2.05% drop</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Shift-Timezone Misalignment Analysis</div>
+          <p style="font-size: 0.85rem; color: var(--gray-700); margin-bottom: 1rem;">
+            55% of US leads are misassigned to IST/SEA shifts due to naive round-robin:
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Geography (Leads)</th>
+                <th>Shift</th>
+                <th>Join Rate</th>
+                <th>Conversion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2"><strong>USA (1,661 leads)</strong></td>
+                <td style="color: var(--success); font-weight: 600;">US_SHIFT (747)</td>
+                <td>69.6%</td>
+                <td style="color: var(--success); font-weight: 700;">11.78%</td>
+              </tr>
+              <tr>
+                <td style="color: var(--danger); font-weight: 600;">IST_SHIFT (660)</td>
+                <td>60.5%</td>
+                <td style="color: var(--danger); font-weight: 700;">7.58% (-36%)</td>
+              </tr>
+              <tr>
+                <td rowspan="2"><strong>Vietnam (797 leads)</strong></td>
+                <td style="color: var(--success); font-weight: 600;">SEA_SHIFT (105)</td>
+                <td>67.6%</td>
+                <td style="color: var(--success); font-weight: 700;">5.71%</td>
+              </tr>
+              <tr>
+                <td style="color: var(--danger); font-weight: 600;">US_SHIFT (362)</td>
+                <td>58.2%</td>
+                <td style="color: var(--danger); font-weight: 700;">3.04% (-47%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Runbook & SOP -->
+    <section id="tab-runbook" class="tab-content">
+      <div class="card">
+        <div class="card-title">14-Day Zero-Engineering Rollout Schedule</div>
+        <ol class="step-list">
+          <li class="step-item">
+            <div class="step-title">Day 1: Deploy CRM Timezone Routing Rule (Immediate Prerequisite)</div>
+            <div class="step-desc">Configure CRM workflow to route US leads strictly to US shift reps, SEA to SEA reps, and Middle East/UK/India to IST reps. (Unlocks +41.7 conv/mo).</div>
+          </li>
+          <li class="step-item">
+            <div class="step-title">Days 2–3: WhatsApp Business Manager Templates & Webhook Connection</div>
+            <div class="step-desc">Submit Meta WABA templates with dynamic variables (child name, time, Zoom link, calendar .ics). Wire CRM webhook on 'demo.scheduled' to Make.com / Wati.</div>
+          </li>
+          <li class="step-item">
+            <div class="step-title">Days 4–7: Rep Shadowing & 10% Pilot</div>
+            <div class="step-desc">Shadow 3 reps live on US Shift. Test 1-tap confirmation and reschedule flows with 10% live lead volume. Train reps in morning standup.</div>
+          </li>
+          <li class="step-item">
+            <div class="step-title">Days 8–11: Randomized 50/50 A/B Test</div>
+            <div class="step-desc">Modulo split by Lead ID. Control: existing manual rep reminder; Variant: Aarav Concierge WhatsApp sequence. Telemetry logged to Google Sheet.</div>
+          </li>
+          <li class="step-item">
+            <div class="step-title">Days 12–14: Full Handoff to Inside Sales Ops Lead</div>
+            <div class="step-desc">Review reconciliation numbers with Finance. Expand to 100% of global traffic. Hand over runbook and escalation protocols to named owner.</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Sales Rep Morning SOP</div>
+          <div style="font-size: 0.85rem; color: var(--gray-700); line-height: 1.6;">
+            <p><strong>🟢 CONFIRMED</strong>: Slot locked. Do not call. Teacher prepares customized project.</p>
+            <p style="margin-top: 0.5rem;"><strong>🟡 RESCHEDULE_PENDING</strong>: Parent requested time shift. Check WhatsApp thread, confirm slot, or warm call within 15 mins.</p>
+            <p style="margin-top: 0.5rem;"><strong>⚪ UNCONFIRMED</strong>: Rep dials parent 2h before demo using value script: <em>"Aarav sent Ethan's project link on WhatsApp—making sure laptop is set!"</em></p>
+            <p style="margin-top: 0.5rem;"><strong>🔴 CANCELLED</strong>: Free up teacher room immediately for standby leads.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Finance Sign-Off Formula</div>
+          <div style="background: #0f172a; color: #f8fafc; padding: 1.25rem; border-radius: 8px; font-size: 0.85rem; font-family: monospace;">
+            ΔAttendees = Sched_Leads × (ShowRate_Var - ShowRate_Ctrl)<br>
+            ΔConversions = ΔAttendees × 17.57% (Hist Conv)<br>
+            Verified Revenue = ΔConversions × ₹60,000<br><br>
+            Baseline Registered: 63.80% Show Rate<br>
+            Target Threshold: 78.00% Show Rate
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Sample Leads Data
+    const leads = [
+      {
+        id: "L104544",
+        parent: "Sarah Jenkins",
+        child: "Ethan",
+        age: 10,
+        tz: "America/New_York (US_SHIFT)",
+        time: "Tomorrow at 5:00 PM",
+        rep: "AD-01 (US Shift)",
+        zoom: "https://brightchamps.zoom.us/j/104544"
+      },
+      {
+        id: "L100757",
+        parent: "Tariq Al-Mansoor",
+        child: "Omar",
+        age: 8,
+        tz: "Asia/Riyadh (IST_SHIFT)",
+        time: "Tomorrow at 6:30 PM",
+        rep: "AD-06 (IST Shift)",
+        zoom: "https://brightchamps.zoom.us/j/100757"
+      },
+      {
+        id: "L103708",
+        parent: "David Smith",
+        child: "Sophie",
+        age: 11,
+        tz: "Europe/London (IST_SHIFT)",
+        time: "Wednesday at 4:00 PM",
+        rep: "AD-07 (IST Shift)",
+        zoom: "https://brightchamps.zoom.us/j/103708"
+      },
+      {
+        id: "L101868",
+        parent: "Nguyen Van Minh",
+        child: "Bao",
+        age: 9,
+        tz: "Asia/Ho_Chi_Minh (SEA_SHIFT)",
+        time: "Thursday at 5:30 PM",
+        rep: "AD-10 (SEA Shift)",
+        zoom: "https://brightchamps.zoom.us/j/101868"
+      }
+    ];
+
+    let currentLead = leads[0];
+    let chatHistory = [];
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    }
+
+    function changeLead() {
+      const idx = document.getElementById('lead-selector').value;
+      currentLead = leads[idx];
+      document.getElementById('disp-lead-id').innerText = currentLead.id;
+      document.getElementById('disp-parent-name').innerText = currentLead.parent;
+      document.getElementById('disp-child-info').innerText = `${currentLead.child} (${currentLead.age} yrs)`;
+      document.getElementById('disp-tz').innerText = currentLead.tz;
+      document.getElementById('disp-demo-time').innerText = currentLead.time;
+      document.getElementById('disp-rep').innerText = currentLead.rep;
+      document.getElementById('crm-status-badge').innerText = "DEMO_SCHEDULED";
+      document.getElementById('crm-status-badge').className = "badge badge-primary";
+      document.getElementById('disp-rep-action').innerText = "None (Waiting for bot)";
+      
+      initChat();
+    }
+
+    function initChat() {
+      const chatContainer = document.getElementById('chat-messages');
+      chatContainer.innerHTML = '';
+      
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const welcomeText = `Hi ${currentLead.parent}! Congratulations on booking ${currentLead.child}'s 1-on-1 trial class with BrightCHAMPS.\n\nClass Timing: ${currentLead.time}\nMeeting Link: ${currentLead.zoom}\nRecommended Device: Laptop or PC for hands-on activities.\n\nAdd to calendar: https://calendar.google.com/event?bc=${currentLead.id}\n\nPlease reply YES to confirm attendance, or reply RESCHEDULE if you need a different time.`;
+      
+      addMessage(welcomeText, 'bot', now);
+    }
+
+    function addMessage(text, sender, time) {
+      const chatContainer = document.getElementById('chat-messages');
+      const bubble = document.createElement('div');
+      bubble.className = `wa-bubble ${sender}`;
+      // Strip any raw asterisks or markdown syntax so text renders cleanly
+      const cleanText = text.replace(/\*/g, '').replace(/_/g, '');
+      bubble.innerHTML = cleanText.replace(/\n/g, '<br>') + `<div class="wa-time">${time}</div>`;
+      chatContainer.appendChild(bubble);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function sendUserMessage(text) {
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      addMessage(text, 'user', now);
+      
+      setTimeout(() => {
+        respondBot(text);
+      }, 500);
+    }
+
+    function sendCustomMessage() {
+      const input = document.getElementById('user-input');
+      const val = input.value.trim();
+      if (!val) return;
+      input.value = '';
+      sendUserMessage(val);
+    }
+
+    function respondBot(userText) {
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const lower = userText.toLowerCase();
+      let reply = "";
+      
+      if (lower.includes("yes") || lower.includes("confirm") || lower.includes("there") || lower.includes("sure")) {
+        reply = `Awesome! ${currentLead.child}'s slot is confirmed. Our mentor has been notified. We will send the direct meeting link 10 minutes before class. Looking forward to a great session!`;
+        document.getElementById('crm-status-badge').innerText = "DEMO_CONFIRMED";
+        document.getElementById('crm-status-badge').className = "badge badge-success";
+        document.getElementById('disp-rep-action').innerText = "Slot locked (No rep dial needed)";
+      } else if (lower.includes("reschedule") || lower.includes("tomorrow") || lower.includes("can't") || lower.includes("practice")) {
+        reply = `No problem at all! We know family schedules change.\n\nHere are two instant options for tomorrow:\n1. Tomorrow at 5:00 PM\n2. Tomorrow at 7:00 PM\n\nReply 1 or 2 to choose, or send your preferred day and time.`;
+        document.getElementById('crm-status-badge').innerText = "RESCHEDULE_PENDING";
+        document.getElementById('crm-status-badge').className = "badge badge-primary";
+        document.getElementById('disp-rep-action').innerText = "Check preferred slot / warm call";
+      } else if (lower.includes("ipad") || lower.includes("tablet") || lower.includes("zoom") || lower.includes("laptop") || lower.includes("device")) {
+        reply = `For the best experience, we recommend using a laptop or desktop computer with Google Chrome so ${currentLead.child} can build the interactive project. Tablets work as a backup, but phones are not recommended.`;
+      } else if (lower.includes("price") || lower.includes("cost") || lower.includes("fees") || lower.includes("fee")) {
+        reply = `BrightCHAMPS offers flexible monthly and annual learning pathways tailored to each child. This trial class is 100% free and hands-on. At the end of the session, our academic director will share a progress report and scholarship options.`;
+      } else {
+        reply = `Got it! I am connecting you directly with your dedicated BrightCHAMPS counselor (${currentLead.rep}) who will assist you right away.`;
+        document.getElementById('crm-status-badge').innerText = "ESCALATED_TO_REP";
+        document.getElementById('crm-status-badge').className = "badge badge-primary";
+        document.getElementById('disp-rep-action').innerText = "Rep pinged on Slack: Attend inquiry";
+      }
+      
+      addMessage(reply, 'bot', now);
+    }
+
+    function calculateROI() {
+      const showRate = parseFloat(document.getElementById('slider-showrate').value);
+      const revPerConv = parseFloat(document.getElementById('slider-rev').value);
+      const routingOn = parseInt(document.getElementById('routing-toggle').value);
+
+      document.getElementById('slider-showrate-val').innerText = showRate.toFixed(1) + "%";
+      document.getElementById('slider-rev-val').innerText = "₹" + revPerConv.toLocaleString();
+
+      const monthlySched = 1614.5;
+      const baseShowRate = 63.8;
+      const deltaRate = Math.max(0, (showRate - baseShowRate) / 100);
+      const recoveredAttendees = monthlySched * deltaRate;
+      
+      const convRate = 0.1757;
+      let incConvFromShow = recoveredAttendees * convRate;
+      let incConvFromRouting = routingOn ? 41.7 : 0;
+      let totalIncConv = incConvFromShow + incConvFromRouting;
+
+      let netMonthlyRev = totalIncConv * revPerConv;
+      let annualRev = netMonthlyRev * 12;
+
+      document.getElementById('calc-recovered-leads').innerText = recoveredAttendees.toFixed(1) + " parents";
+      document.getElementById('calc-incremental-conv').innerText = "+" + totalIncConv.toFixed(1) + " customers";
+      document.getElementById('calc-monthly-rev').innerText = "₹" + Math.round(netMonthlyRev).toLocaleString() + " / mo";
+      document.getElementById('calc-annual-rev').innerText = `Annualized Run-Rate: ₹${(annualRev / 10000000).toFixed(2)} Crores / year`;
+      document.getElementById('calc-hours-saved').innerText = (recoveredAttendees * 0.75).toFixed(1) + " hours (Zoom downtime)";
+      
+      const roi = netMonthlyRev / 35000;
+      document.getElementById('calc-roi').innerText = roi.toFixed(1) + "x";
+    }
+
+    // Initialize
+    window.onload = function() {
+      initChat();
+      calculateROI();
+    };
+  </script>
+</body>
+</html>
+

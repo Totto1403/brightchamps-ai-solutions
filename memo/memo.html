@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BrightCHAMPS — Executive Memo: Slashing Trial No-Shows</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 9mm 11mm 9mm 11mm;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
+      line-height: 1.30;
+      font-size: 8.6pt;
+      background: #ffffff;
+    }
+    
+    /* Header */
+    .header {
+      border-bottom: 2px solid #5c3be8;
+      padding-bottom: 4px;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .header-left h1 {
+      font-size: 13pt;
+      font-weight: 800;
+      color: #1e1b4b;
+      letter-spacing: -0.02em;
+    }
+    .header-left .meta {
+      font-size: 7.8pt;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+    .header-right {
+      text-align: right;
+    }
+    .badge-signoff {
+      background: #f0edff;
+      color: #5c3be8;
+      border: 1px solid #c7d2fe;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 7.2pt;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Key Numbers Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .kpi-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 4px 6px;
+      border-left: 3px solid #5c3be8;
+    }
+    .kpi-card.success { border-left-color: #10b981; background: #f0fdf4; }
+    .kpi-card.danger { border-left-color: #ef4444; background: #fef2f2; }
+    .kpi-label {
+      font-size: 6.5pt;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .kpi-val {
+      font-size: 11pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.15;
+      margin-top: 1px;
+    }
+    .kpi-sub {
+      font-size: 6.5pt;
+      color: #64748b;
+    }
+
+    /* Section Styles */
+    .section-title {
+      font-size: 8.5pt;
+      font-weight: 800;
+      color: #1e1b4b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 2px;
+      margin-top: 5px;
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    p { margin-bottom: 3.5px; text-align: justify; }
+    strong { font-weight: 700; color: #0f172a; }
+
+    /* Compact Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.6pt;
+      margin-bottom: 4px;
+    }
+    th, td {
+      padding: 2.5px 4.5px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #334155;
+    }
+    tr.highlight {
+      background: #fef2f2;
+      font-weight: 700;
+    }
+
+    /* Multi-column grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 8px;
+    }
+
+    .callout {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin-bottom: 3px;
+    }
+    .callout-title {
+      font-weight: 700;
+      color: #1e1b4b;
+      font-size: 7.8pt;
+      margin-bottom: 2px;
+    }
+
+    ul {
+      padding-left: 14px;
+      margin-bottom: 3px;
+    }
+    li {
+      margin-bottom: 1px;
+      font-size: 8pt;
+    }
+
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 3px;
+      font-size: 6.6pt;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>MEMORANDUM: SLASHING TRIAL NO-SHOWS</h1>
+      <div class="meta"><strong>TO:</strong> Founder's Office & Finance &bull; <strong>FROM:</strong> AI Forward Deployed Associate &bull; <strong>DATE:</strong> September 21, 2026</div>
+    </div>
+    <div class="header-right">
+      <span class="badge-signoff">Finance Signed-Off Model</span>
+    </div>
+  </div>
+
+  <!-- KPI Strip -->
+  <div class="kpi-strip">
+    <div class="kpi-card danger">
+      <div class="kpi-label">Gross Ceiling (TAM of Leak)</div>
+      <div class="kpi-val">&#8377;61.62 Lakhs</div>
+      <div class="kpi-sub">584.5 No-Shows / mo (100% cap)</div>
+    </div>
+    <div class="kpi-card success">
+      <div class="kpi-label">Recoverable Impact (Benchmarked)</div>
+      <div class="kpi-val">&#8377;24.12 Lakhs/mo</div>
+      <div class="kpi-sub">&#8377;2.89 Cr / year run-rate</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Pre-Registered Baseline</div>
+      <div class="kpi-val">63.80% Show Rate</div>
+      <div class="kpi-sub">1,614.5 scheduled demos/mo</div>
+    </div>
+    <div class="kpi-card success">
+      <div class="kpi-label">Target Metric (Internal Benchmark)</div>
+      <div class="kpi-val">78.00% Show Rate</div>
+      <div class="kpi-sub">+40.2 Paid Customers/mo (68.9x ROI)</div>
+    </div>
+  </div>
+
+  <!-- 1. The Leak -->
+  <div class="section-title">1. The Leak: Gross Theoretical Ceiling vs. Realistic Recoverable Loss</div>
+  <p>
+    Across 5,000 leads (June&ndash;July 2026; 2,500/mo) at &#8377;60k revenue/customer and &#8377;900 CAC, the single largest revenue drain is the <strong>Pre-Demo No-Show Drop-Off (Scheduled &rarr; Joined)</strong>. Out of 3,229 scheduled demos, 1,169 parents failed to attend (<strong>584.5 no-shows/mo; 36.20% no-show rate</strong>).
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Funnel Stage</th>
+        <th>Monthly Vol</th>
+        <th>Stage Conv %</th>
+        <th>Funnel %</th>
+        <th>Financial Leak Working (INR / Month)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Lead &rarr; Demo Scheduled</td>
+        <td>1,614.5</td>
+        <td>64.58%</td>
+        <td>64.58%</td>
+        <td>885.5 unscheduled leads/mo = <strong>&#8377;7.97L flushed CAC</strong> (&#8377;38.47L lost rev at 7.24% conv)</td>
+      </tr>
+      <tr class="highlight">
+        <td>Demo Scheduled &rarr; Joined</td>
+        <td>1,030.0</td>
+        <td>63.80%</td>
+        <td>41.20%</td>
+        <td><strong>584.5 NO-SHOWS &times; 17.57% conv &times; &#8377;60,000 = &#8377;61,62,786 / MO THEORETICAL CEILING</strong></td>
+      </tr>
+      <tr>
+        <td>Demo Joined &rarr; Completed</td>
+        <td>893.0</td>
+        <td>86.70%</td>
+        <td>35.72%</td>
+        <td>137.0 in-demo drops &times; 20.27% conv &times; &#8377;60,000 = &#8377;16.66L / month</td>
+      </tr>
+      <tr>
+        <td>Demo Completed &rarr; Converted</td>
+        <td>181.0</td>
+        <td>20.27%</td>
+        <td>7.24%</td>
+        <td>Baseline revenue: <strong>&#8377;1,08,60,000 / month</strong> (Net contribution: &#8377;86.10L / mo)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    <strong>Root Cause & Empirical Target Grounding:</strong> Sizing requires distinguishing the <em>theoretical ceiling</em> (&#8377;61.62L/mo if 100% of no-shows attended) from <em>recoverable cash</em>. In the dataset, leads scheduled within 24&ndash;48h <strong>already achieve a 77.52% show rate</strong> (22.5% no-show). Show rate collapses to <strong>45.4%</strong> when lag exceeds 48h. Our 78.0% target is therefore an <strong>internal empirical benchmark</strong>, not an assumed guess. Closing this lag gap recovers 229.3 attendees/mo (&asymp; 172 wasted rep hours in empty Zoom rooms).
+  </p>
+
+  <!-- 2. The Lever & Trade-Off Reasoning -->
+  <div class="section-title">2. The Lever: AI WhatsApp Attendance Concierge ("Aarav") & Trade-Offs</div>
+  <div class="grid-2">
+    <div>
+      <p>
+        <strong>The Chosen Lever:</strong> A 2-way conversational WhatsApp agent triggered instantly upon demo scheduling via CRM webhook (Wati/Aisensy + Make.com). Delivers:
+      </p>
+      <ul>
+        <li><strong>Instant 1-Click Calendar Sync:</strong> Injects Google/Apple Calendar links (.ics) + 30s project teaser video.</li>
+        <li><strong>Interactive T-24h / T-2h Confirmation:</strong> 1-tap buttons (<em>"Confirm Spot"</em> or <em>"Reschedule"</em>).</li>
+        <li><strong>T-10m Direct Launch:</strong> Pings parent with 1-tap Zoom link and laptop audio/browser checklist.</li>
+        <li><strong>Recoverable Financial Impact:</strong> Slashes no-show rate from <strong>36.2% to 22.0%</strong> (anchored to the 24&ndash;48h benchmark; 229.3 attendees recovered/mo). At historical 17.57% join-to-paid conversion, yields <strong>+40.2 paid conversions/mo = &#8377;24,12,000/mo incremental revenue</strong> (&#8377;2.89 Cr/yr) against &#8377;35k/mo tool cost (<strong>68.9x ROI</strong>).</li>
+      </ul>
+    </div>
+    <div>
+      <div class="callout">
+        <div class="callout-title">Alternatives Considered & Rejected</div>
+        <ul style="padding-left: 10px; margin-bottom: 0;">
+          <li><strong>Rejected 1: Outbound AI Voice Bot:</strong> High consumer friction; &gt;60% parents hang up; severe TCPA/DND compliance penalties across US/UK.</li>
+          <li><strong>Rejected 2: Timezone Routing Alone:</strong> Two-proportion z-tests prove <em>only the USA effect is statistically significant</em> (z = 2.65, p = 0.008, unlocking &#8377;11.31L/mo). Other cells are sample noise. Even on US_SHIFT, US no-show is 30.4%. We deploy USA routing as a Day-1 CRM rule, but focus the primary build on attendance.</li>
+          <li><strong>Rejected 3: Post-Demo Pitch Copilot:</strong> Requires &gt;6 wks coaching, subjective adoption, and ignores empty demo rooms.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Biggest Adoption Risk & Operational Mitigation -->
+  <div class="section-title">3. Biggest Adoption Risk & Operational Mitigation</div>
+  <p>
+    <strong>The Core Risk: Rep Workflow Bypass & Parent Spam Fatigue.</strong> Counselors might mistrust bot statuses and continue double-calling parents, causing confusion, while parents might block automated WhatsApp alerts.
+  </p>
+  <p>
+    <strong>Mitigation Plan:</strong> (1) <strong>Zero Rep Disruption:</strong> Bot directly updates CRM custom field <code>attendance_status</code> (<code>CONFIRMED</code>, <code>RESCHEDULE_PENDING</code>). In morning standups, reps are instructed: <em>"Green means locked; don't call."</em> Reps save 172 hours/month. (2) <strong>Value-First Content:</strong> Messages are not generic reminders; they contain the child's customized coding project link. (3) <strong>Instant Opt-Out:</strong> Replying "STOP" triggers immediate unsubscribing and tags CRM <code>DO_NOT_CONTACT</code>.
+  </p>
+
+  <!-- 4. Measurement Framework & Pre-Registered Baseline -->
+  <div class="section-title">4. Measurement Framework & Pre-Registered Baseline</div>
+  <p>
+    <strong>Measurement Design:</strong> 14-day 50/50 randomized A/B test on all newly scheduled demos (split by Lead ID modulo).
+  </p>
+  <ul>
+    <li><strong>Pre-Registered Control Baseline:</strong> Demo Scheduled = 1,614.5/mo &bull; Demo Show Rate = <strong>63.80%</strong> &bull; Demo Join-to-Paid = <strong>17.57%</strong> &bull; CAC = &#8377;900.</li>
+    <li><strong>Primary Success Metric:</strong> Demo Show Rate in Variant reaches <strong>&ge; 78.00%</strong> (anchored to 24&ndash;48h benchmark of 77.52%; p &lt; 0.01).</li>
+    <li><strong>Guardrail Metrics:</strong> Parent WhatsApp opt-out rate &lt; 2.5%; Demo completion rate post-join holds at &ge; 86.0%.</li>
+    <li><strong>Finance Verification Formula:</strong> <code>&Delta;Revenue = N_sched &times; (ShowRate_Variant &minus; ShowRate_Control) &times; 17.57% &times; &#8377;60,000</code>. Verified weekly by FP&A.</li>
+  </ul>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>BrightCHAMPS Confidential &bull; Founder's Office AI Solutions Initiative</span>
+    <span>Interactive Prototype: build/index.html &bull; Python Engine (5/5 Unit Tests Pass): build/attendance_agent.py &bull; Runbook: build/RUNBOOK.md</span>
+  </div>
+
+</body>
+</html>
