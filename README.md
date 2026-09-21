@@ -3,7 +3,20 @@
 > **Founder's Office Initiative**: Slashing Trial Class No-Show Rates with AI & Zero-Engineering Automation  
 > **Target Metric**: Trial Demo Show Rate (Baseline: 63.80% → Target: 78.00%)  
 > **Net Financial Impact**: **+₹24.12 Lakhs / month** (**₹2.89 Crores / year run-rate**; 68.9x ROI)  
-> **Candidate**: Bharanee
+> **Candidate**: Bharanee B  
+> **Contact**: [+91 7708221675](tel:+917708221675) | [LinkedIn Profile](https://www.linkedin.com/in/bharanee-b-a387902b5/)
+
+---
+
+## ⚡ Quick Deliverables & Links
+
+| Deliverable | Access Link | Description |
+| :--- | :--- | :--- |
+| 🌐 **Live Prototype** | [brightchamps-ai-solutions.onrender.com](https://brightchamps-ai-solutions.onrender.com) | Standalone interactive web app (2-way WhatsApp simulator, ROI model, CRM telemetry) |
+| 🎬 **Video Walkthrough** | [Google Drive Video (2 Mins)](https://drive.google.com/file/d/1iS3d0MqnzJDR8UH8YxLr6K6lg6v23bkZ/view?usp=sharing) | 2-minute executive walkthrough of the prototype, runbook, and findings |
+| 📄 **Executive Memo** | [`memo/memo.pdf`](memo/memo.pdf) | Strictly 1-page executive memorandum (Finance signed-off format) |
+| 📘 **Word Memo** | [`memo/memo.docx`](memo/memo.docx) | Fully styled single-page Microsoft Word deliverable |
+| 💻 **GitHub Repository** | [github.com/Totto1403/brightchamps-ai-solutions](https://github.com/Totto1403/brightchamps-ai-solutions) | Complete auditable source code, tests, and analysis engine |
 
 ---
 
@@ -25,35 +38,28 @@ Analyzing 5,000 anonymised leads across June–July 2026 revealed:
 ```
 ├── memo/
 │   ├── memo.pdf                       # Strictly 1-Page Executive Memo (Finance Signed-Off)
-│   ├── memo.html                      # Source HTML template for PDF compilation
+│   ├── memo.docx                      # Strictly 1-Page Word Version
 │   └── memo.md                        # Markdown version
 ├── build/
-│   ├── index.html                     # Standalone Interactive Web Prototype
-│   ├── attendance_agent.py            # Production Python Backend Engine (5/5 Unit Tests)
-│   └── RUNBOOK.md                     # Operational Runbook (Named Owners, SOP, Fallbacks)
+│   ├── index.html                     # Standalone Interactive Web Prototype (HTML/CSS/JS)
+│   ├── attendance_agent.py            # Production Python Backend Engine (5/5 Unit Tests Passing)
+│   └── RUNBOOK.md                     # Operational Runbook (Named Owners, Rep SOP, Fallbacks)
 ├── analysis/
-│   ├── funnel_analysis.py             # Statistical analysis script (z-tests, p-values)
-│   └── leak_quantification_report.md   # Full audit report
-├── index.html                         # Root redirect for Render hosting
-├── render.yaml                        # Render static site deployment config
-├── SUBMISSION_EMAIL.md                # Ready-to-send response to Talent Acquisition
+│   ├── funnel_analysis.py             # Reproducible statistical engine (two-proportion z-tests)
+│   └── leak_quantification_report.md   # Full audit report & TAM vs. Recoverable breakdown
+├── index.html                         # Root redirect for Render cloud hosting
+├── render.yaml                        # Render static site deployment configuration
 └── README.md                          # Repository documentation
 ```
 
 ---
 
-## 🚀 Live Demo & Interactive Prototype
+## 🚀 Interactive Prototype (Zero Installation)
 
 The prototype includes a **live WhatsApp chat simulator**, a **real-time ROI & what-if financial model**, and a **CRM telemetry inspector**.
 
-### Option A: Open Locally (Zero Installation)
-Simply double-click `build/index.html` in your file explorer to run it instantly in Chrome, Edge, Safari, or Firefox.
-
-### Option B: Deploy to Render in 60 Seconds
-1. Push this repository to GitHub.
-2. In [Render Dashboard](https://dashboard.render.com/), click **New +** → **Static Site**.
-3. Connect this repository. Render will automatically detect `render.yaml`.
-4. Click **Deploy**. Your live prototype will be accessible at `https://<your-app>.onrender.com`.
+- **Option A (Live Cloud)**: Open [brightchamps-ai-solutions.onrender.com](https://brightchamps-ai-solutions.onrender.com) in any browser (runs immediately without any setup).
+- **Option B (Local Offline)**: Simply double-click `build/index.html` in your file explorer to run it instantly in Chrome, Edge, Safari, or Firefox.
 
 ---
 
@@ -93,6 +99,6 @@ $$\Delta \text{Conversions} = \Delta \text{Attendees} \times 17.57\% \text{ (His
 
 $$\text{Verified Revenue} = \Delta \text{Conversions} \times ₹60,000$$
 
-- **Pre-Registered Baseline**: 63.80% Show Rate (584.5 monthly no-shows).
+- **Pre-Registered Baseline**: 63.80% Show Rate across 1,614.5 monthly scheduled leads.
 - **Target Threshold**: 78.00% Show Rate (anchored to the internal 24–48h fast-scheduled benchmark of 77.52%; $p < 0.01$).
-
+- **Net Run-Rate Contribution**: ₹24,12,000 / month against ₹35,000 / month tooling costs (**68.9x ROI**).
