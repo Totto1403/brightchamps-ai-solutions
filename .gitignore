@@ -1,7 +1,17 @@
+# Private submission drafts & notes
+SUBMISSION_EMAIL.md
+
+# Python cache & artifacts
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyo
+*.pyd
+
+# OS & Editor files
 .DS_Store
 Thumbs.db
 *.tmp
-
+.vscode/
+.idea/
+*.zip
