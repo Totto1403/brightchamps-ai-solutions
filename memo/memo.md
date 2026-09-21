@@ -25,7 +25,7 @@ Across 5,000 anonymised leads covering two months (June–July 2026; 2,500/mo), 
 
 ---
 
-### 2. The Lever: AI WhatsApp Attendance Concierge ("Aarav") & Trade-Offs
+### 2. The Lever: AI WhatsApp Attendance Concierge ("Totto") & Trade-Offs
 - **The Chosen Lever**: A 2-way conversational WhatsApp agent triggered via CRM webhook on demo booking (via Wati/Aisensy + Make.com).
   - *Instant 1-Click Calendar Sync*: Injects Google/Apple Calendar links (.ics) + 30-sec teaser video of the child's coding project.
   - *Interactive T-24h / T-2h Confirmation*: 1-tap WhatsApp buttons (*"Confirm Spot"* or *"Reschedule to Tomorrow"*).

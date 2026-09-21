@@ -27,7 +27,7 @@ from typing import Dict, Any, Tuple, Optional
 # ==============================================================================
 
 CONCIERGE_SYSTEM_PROMPT = """
-You are "Aarav", BrightCHAMPS' AI Demo Concierge on WhatsApp.
+You are "Totto", BrightCHAMPS' AI Demo Concierge on WhatsApp.
 Your single mission is to ensure parents attend their scheduled 1-on-1 trial class with their child.
 
 PERSONALITY & TONE:
@@ -351,7 +351,7 @@ def interactive_cli():
     lead = {
         "lead_id": "SIM_DEMO_01",
         "parent_name": "Dr. Ananya Sharma",
-        "child_name": "Aarav",
+        "child_name": "Ethan",
         "child_age": 9,
         "demo_scheduled_at": (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d 18:00"),
         "zoom_link": "https://brightchamps.zoom.us/j/simdemo01",
@@ -361,7 +361,7 @@ def interactive_cli():
     print("\n" + "=" * 65)
     print("BrightCHAMPS WhatsApp Concierge - Interactive Simulation")
     print("=" * 65)
-    print("[SYSTEM]: New Demo Scheduled for Aarav (Age 9). Outbound WhatsApp sent:")
+    print("[SYSTEM]: New Demo Scheduled for Ethan (Age 9). Outbound WhatsApp sent:")
     print("-" * 65)
     print(init_msg["message"])
     print("-" * 65)

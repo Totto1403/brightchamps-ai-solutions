@@ -15,7 +15,7 @@ Analyzing 5,000 anonymised leads across June–July 2026 revealed:
 1. **The Primary Leak**: Out of 3,229 scheduled demos, 1,169 parents failed to attend (**584.5 no-shows/month; 36.20% no-show rate**).
 2. **The Financial Ceiling**: At a 17.57% historical attendee conversion rate, this represents a gross theoretical pool of **₹61.62 Lakhs / month** in unrealized revenue.
 3. **The Root Cause**: A **24-hour scheduling lag cliff**—leads scheduled within 24–48 hours achieve a **77.52% show rate**, but show rates collapse to **45.4%** when delayed past 48 hours.
-4. **The Lever**: **Aarav — The AI WhatsApp Attendance Concierge**. Deployed in 14 days with zero engineering sprints using CRM webhooks, 1-click Google/Apple Calendar (.ics) injection, interactive T-24h confirmations, and T-10m Zoom launch alerts.
+4. **The Lever**: **Totto — The AI WhatsApp Attendance Concierge**. Deployed in 14 days with zero engineering sprints using CRM webhooks, 1-click Google/Apple Calendar (.ics) injection, interactive T-24h confirmations, and T-10m Zoom launch alerts.
 5. **Recoverable Impact**: Bridges the delayed-lead gap to the internal 77.52% speed-to-lead benchmark, recovering **229.3 attendees/month** and delivering **+40.2 net paid conversions/month (₹24.12 Lakhs / month)**.
 
 ---

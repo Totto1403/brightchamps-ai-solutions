@@ -50,7 +50,7 @@ The entire solution runs without a single software engineering sprint, leveragin
 - **Day 3**: Configure CRM Webhook on `status == 'DEMO_SCHEDULED'` in Make.com / n8n pointing to WhatsApp sender.
 
 ### Phase 2: Pilot & Rep Shadowing (Days 4 to 7)
-- **Days 4–5**: Route 10% of new US scheduled leads to Aarav Concierge. Shadow 3 reps live.
+- **Days 4–5**: Route 10% of new US scheduled leads to Totto Concierge. Shadow 3 reps live.
 - **Days 6–7**: Rep training in 15-minute morning standup. Show reps where WhatsApp responses appear in CRM contact record.
 
 ### Phase 3: Randomized 50/50 A/B Test (Days 8 to 11)
@@ -74,7 +74,7 @@ Every Academic Counselor / Sales Rep follows this 3-step morning checklist:
    - 🟡 **RESCHEDULE_PENDING** (Parent tapped Reschedule):
      - *Rep Action*: Open WhatsApp chat thread. Check parent's preferred time. Confirm new slot in 1 click or dial parent warmly within 15 minutes.
    - ⚪ **UNCONFIRMED** (No reply to T-24h nudge):
-     - *Rep Action*: Priority dial 2 hours before demo with phone script: *"Hi [Parent], Aarav sent you Ethan's project link on WhatsApp—just making sure your laptop is all set for 5 PM!"*
+     - *Rep Action*: Priority dial 2 hours before demo with phone script: *"Hi [Parent], Totto sent you Ethan's project link on WhatsApp—just making sure your laptop is all set for 5 PM!"*
    - 🔴 **CANCELLED / OPT_OUT**:
      - *Rep Action*: Do not call. Teacher calendar slot automatically freed up for reallocation.
 
