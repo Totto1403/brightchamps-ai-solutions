@@ -1,6 +1,13 @@
 # Private submission drafts & notes
 SUBMISSION_EMAIL.md
 
+# Helper generation scripts & raw HTML templates
+memo/generate_word_memo.py
+memo/memo.html
+
+# Microsoft Office temporary lock files
+~$*
+
 # Python cache & artifacts
 __pycache__/
 *.py[cod]
